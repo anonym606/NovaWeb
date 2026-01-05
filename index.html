@@ -1,60 +1,140 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>You Are An Idiot 😈 (Parodie)</title>
-    <style>
-        body {
-            margin: 0;
-            background: black;
-            overflow: hidden;
-            font-family: Arial, sans-serif;
-        }
+<meta charset="UTF-8">
+<title>You Are An Idiot 😈 (ULTIMATE XP SAFE)</title>
 
-        .idiot {
-            position: absolute;
-            color: lime;
-            font-size: 32px;
-            font-weight: bold;
-            animation: move 3s linear infinite;
-        }
+<style>
+body {
+    margin: 0;
+    overflow: hidden;
+    background: #008080;
+    font-family: Tahoma, Verdana, Arial, sans-serif;
+}
 
-        @keyframes move {
-            0% {
-                transform: translate(0, 0);
-            }
-            50% {
-                transform: translate(200px, 150px);
-            }
-            100% {
-                transform: translate(0, 0);
-            }
-        }
-    </style>
+/* Texte qui envahit l’écran */
+.idiot {
+    position: absolute;
+    font-size: 26px;
+    font-weight: bold;
+    color: yellow;
+    text-shadow: 2px 2px red;
+    pointer-events: none;
+}
+
+/* Faux popup Windows XP */
+.popup {
+    position: absolute;
+    width: 280px;
+    height: 120px;
+    background: #c0c0c0;
+    border: 2px solid #000080;
+    box-shadow: 4px 4px 0 #808080;
+    z-index: 9999;
+}
+
+.popup .title {
+    background: #000080;
+    color: white;
+    padding: 4px 6px;
+    font-size: 13px;
+}
+
+.popup .content {
+    padding: 10px;
+    font-size: 13px;
+}
+
+.popup button {
+    position: absolute;
+    bottom: 8px;
+    right: 10px;
+    padding: 2px 10px;
+    font-size: 12px;
+    cursor: pointer;
+}
+</style>
 </head>
 <body>
 
+<!-- Son (démarre après clic, règle navigateur) -->
+<audio id="sound" loop>
+  <source src="https://www.myinstants.com/media/sounds/you-are-an-idiot.mp3" type="audio/mpeg">
+</audio>
+
 <script>
-    function createIdiot() {
-        const div = document.createElement("div");
-        div.className = "idiot";
-        div.textContent = "YOU ARE AN IDIOT 😜";
+/* ===== TEXTE CHAOTIQUE ===== */
+function spawnText() {
+    const t = document.createElement("div");
+    t.className = "idiot";
+    t.textContent = "YOU ARE AN IDIOT ";
 
-        div.style.left = Math.random() * window.innerWidth + "px";
-        div.style.top = Math.random() * window.innerHeight + "px";
-        div.style.animationDuration = (1 + Math.random() * 3) + "s";
+    t.style.left = Math.random() * innerWidth + "px";
+    t.style.top = Math.random() * innerHeight + "px";
+    t.style.transform = `rotate(${Math.random()*40-20}deg)`;
 
-        document.body.appendChild(div);
+    document.body.appendChild(t);
+    setTimeout(() => t.remove(), 7000);
+}
+setInterval(spawnText, 250);
 
-        // Supprime après 10 secondes (sécurité)
-        setTimeout(() => {
-            div.remove();
-        }, 10000);
+/* ===== POPUPS XP QUI REBONDISSENT ===== */
+const popups = [];
+
+function spawnPopup() {
+    const p = document.createElement("div");
+    p.className = "popup";
+    p.innerHTML = `
+        <div class="title">Microsoft Windows</div>
+        <div class="content">You are an idiot 😜</div>
+        <button>OK</button>
+    `;
+
+    p.x = Math.random() * (innerWidth - 300);
+    p.y = Math.random() * (innerHeight - 140);
+    p.vx = (Math.random() < 0.5 ? -1 : 1) * (2 + Math.random()*2);
+    p.vy = (Math.random() < 0.5 ? -1 : 1) * (2 + Math.random()*2);
+
+    p.style.left = p.x + "px";
+    p.style.top = p.y + "px";
+
+    // Cliquer OK → en crée encore plus (parodie)
+    p.querySelector("button").onclick = () => {
+        spawnPopup();
+        spawnPopup();
+    };
+
+    document.body.appendChild(p);
+    popups.push(p);
+}
+
+// Mouvement des popups (rebond)
+function animatePopups() {
+    for (const p of popups) {
+        p.x += p.vx;
+        p.y += p.vy;
+
+        if (p.x <= 0 || p.x >= innerWidth - 280) p.vx *= -1;
+        if (p.y <= 0 || p.y >= innerHeight - 120) p.vy *= -1;
+
+        p.style.left = p.x + "px";
+        p.style.top = p.y + "px";
     }
+    requestAnimationFrame(animatePopups);
+}
 
-    // Crée un texte toutes les 500 ms
-    setInterval(createIdiot, 500);
+/* ===== DÉMARRAGE AU CLIC ===== */
+document.body.addEventListener("click", () => {
+    document.getElementById("sound").play();
+    // spawn initial
+    for (let i = 0; i < 3; i++) spawnPopup();
+    animatePopups();
+}, { once: true });
+
 </script>
+</body>
+</html>
+
 
 </body>
 </html>
