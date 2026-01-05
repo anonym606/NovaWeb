@@ -1,63 +1,61 @@
 <!DOCTYPE html>
-<html lang="fr">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>BuzzHeavier</title>
+    <title>You Are An Idiot 😈 (Parodie)</title>
     <style>
         body {
-            background-color: #1c1c1c;
-            color: #ffffff;
+            margin: 0;
+            background: black;
+            overflow: hidden;
             font-family: Arial, sans-serif;
-            text-align: center;
-            padding: 50px;
         }
-        a {
-            color: #4da6ff;
-            text-decoration: none;
+
+        .idiot {
+            position: absolute;
+            color: lime;
+            font-size: 32px;
+            font-weight: bold;
+            animation: move 3s linear infinite;
         }
-        a:hover {
-            text-decoration: underline;
-        }
-        .links {
-            margin-top: 10px;
-            margin-bottom: 30px;
-        }
-        .file-details {
-            margin-top: 20px;
-            text-align: left;
-            display: inline-block;
+
+        @keyframes move {
+            0% {
+                transform: translate(0, 0);
+            }
+            50% {
+                transform: translate(200px, 150px);
+            }
+            100% {
+                transform: translate(0, 0);
+            }
         }
     </style>
 </head>
 <body>
-    <h1>BUZZHEAVIER</h1>
-    <p>Fast and reliable file hosting service.</p>
 
-    <div class="links">
-        <a href="#">Index</a> | 
-        <a href="#">Pricing</a> | 
-        <a href="#">Blog</a> | 
-        <a href="#">Speedtest</a> | 
-        <a href="#">Developers</a> | 
-        <a href="#">Privacy</a> | 
-        <a href="#">Terms</a> | 
-        <a href="#">Proxy</a> | 
-        <a href="#">Contact</a> | 
-        <a href="#">Help</a>
-    </div>
+<script>
+    function createIdiot() {
+        const div = document.createElement("div");
+        div.className = "idiot";
+        div.textContent = "YOU ARE AN IDIOT 😜";
 
-    <h2>nova-SteamRIP.com.rar</h2>
+        div.style.left = Math.random() * window.innerWidth + "px";
+        div.style.top = Math.random() * window.innerHeight + "px";
+        div.style.animationDuration = (1 + Math.random() * 3) + "s";
 
-    <div class="file-details">
-        <ul>
-            <li>Direct: <a href="nova.rar" download>Download</a></li>
-            <li>Preview: <a href="#">Show in Browser</a></li>
-            <li>Details: Size - 10 GB | Views - 67809 | Downloads - 53686</li>
-            <li>SHA-1: 2fe53ce7a4134526157d85a5caa46f537e1f6b3</li>
-        </ul>
-    </div>
+        document.body.appendChild(div);
 
-    <p>If you think this file violates content policy, <a href="#">report here</a></p>
+        // Supprime après 10 secondes (sécurité)
+        setTimeout(() => {
+            div.remove();
+        }, 10000);
+    }
+
+    // Crée un texte toutes les 500 ms
+    setInterval(createIdiot, 500);
+</script>
+
 </body>
 </html>
+
